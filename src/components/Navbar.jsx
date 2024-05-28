@@ -24,7 +24,7 @@ import {
   Container,
 } from "@mui/material";
 import profileImage from "../assets/profile.jpeg";
-import { signoutService } from "../services/AuthService";
+import AuthService from "../services/AuthService";
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -33,10 +33,6 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
-  const signout = signoutService();
-  const handleSignout = () => {
-    signout();
-  };
   return (
     <AppBar
       sx={{
@@ -122,7 +118,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               onClose={handleClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-              <MenuItem onClick={handleSignout}>Log Out</MenuItem>
+              <MenuItem onClick={AuthService.SignOut()}>Log Out</MenuItem>
               <MenuItem onClick={handleClose}>Settings</MenuItem>
               <MenuItem onClick={handleClose}>Profile</MenuItem>
             </Menu>
