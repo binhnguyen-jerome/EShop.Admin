@@ -19,14 +19,9 @@ import {
   HomeOutlined,
   ShoppingCartOutlined,
   Groups2Outlined,
-  ReceiptLongOutlined,
-  PublicOutlined,
-  PointOfSaleOutlined,
-  TodayOutlined,
-  CalendarMonthOutlined,
   AdminPanelSettingsOutlined,
-  TrendingUpOutlined,
-  PieChartOutlined,
+  Inventory2Outlined,
+  CategoryOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -40,15 +35,15 @@ const navItems = [
   },
   {
     text: "Products",
-    icon: <ShoppingCartOutlined />,
+    icon: <Inventory2Outlined />,
   },
   {
     text: "Customers",
-    icon: <AdminPanelSettingsOutlined />,
+    icon: <Groups2Outlined />,
   },
   {
     text: "Categories",
-    icon: <Groups2Outlined />,
+    icon: <CategoryOutlined />,
   },
 ];
 const Sidebar = ({
