@@ -1,30 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, useTheme } from "@mui/material";
+import { Box, Button, CircularProgress, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import CategoryService from "../../services/CategoryService";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { useCategories } from "../../hook/category/useCategory";
 
+//Columns for the grid table
+const columns = [
+  {
+    field: "id",
+    headerName: "ID",
+    flex: 0.5,
+  },
+  {
+    field: "name",
+    headerName: "Category Name",
+    flex: 0.5,
+  },
+  {
+    field: "description",
+    headerName: "Description",
+    flex: 1,
+  },
+];
 const CategoryList = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const handleEdit = (id) => {
     navigate(`/categories/edit/${id}`);
   };
-  const [categories, setCategories] = useState([]);
-  const fetchCategories = async () => {
-    try {
-      const { data } = await CategoryService.getCategories();
-      setCategories(data);
-    } catch (error) {
-      toast.error("Error fetching categories");
-    }
-  };
+  const { categories, loading, getCategories, deleteCategory } =
+    useCategories();
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    getCategories();
+  }, [getCategories]);
   // Alert before delete
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -38,9 +48,8 @@ const CategoryList = () => {
 
     if (result.isConfirmed) {
       try {
-        await CategoryService.deleteCategory(id);
+        await deleteCategory(id);
         Swal.fire("Deleted!", "Your category has been deleted.", "success");
-        fetchCategories();
       } catch (error) {
         Swal.fire(
           "Error!",
@@ -50,25 +59,6 @@ const CategoryList = () => {
       }
     }
   };
-
-  //Columns for the grid table
-  const columns = [
-    {
-      field: "id",
-      headerName: "ID",
-      flex: 0.5,
-    },
-    {
-      field: "name",
-      headerName: "Category Name",
-      flex: 0.5,
-    },
-    {
-      field: "description",
-      headerName: "Description",
-      flex: 1,
-    },
-  ];
   return (
     <Box m="1.5rem 2.5rem">
       <Header
@@ -113,7 +103,7 @@ const CategoryList = () => {
           },
         }}
       >
-        {categories && (
+        {categories && !loading && (
           <DataGrid
             rows={categories}
             columns={[
@@ -125,7 +115,7 @@ const CategoryList = () => {
                 renderCell: (params) => (
                   <>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="secondary"
                       onClick={() => handleEdit(params.row.id)}
                       style={{ marginRight: 8 }}
@@ -133,7 +123,7 @@ const CategoryList = () => {
                       Edit
                     </Button>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="error"
                       onClick={() => handleDelete(params.row.id)}
                     >
@@ -152,6 +142,7 @@ const CategoryList = () => {
             checkboxSelection
           />
         )}
+        {loading && <CircularProgress color="success" />}
       </Box>
     </Box>
   );

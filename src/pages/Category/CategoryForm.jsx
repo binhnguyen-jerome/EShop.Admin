@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Paper } from "@mui/material";
 import Header from "../../components/Header";
 import CategoryService from "../../services/CategoryService";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useCategories } from "../../hook/category/useCategory";
 const CategoryForm = () => {
   const { id } = useParams();
   const isEditMode = !!id;
@@ -14,16 +15,16 @@ const CategoryForm = () => {
     name: "",
     description: "",
   });
-
   const checkoutSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
   });
+  const { createCategory, updateCategory, getCategoryById } = useCategories();
   const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       if (isEditMode) {
-        await CategoryService.updateCategory(id, values);
+        await updateCategory(id, values);
       } else {
-        await CategoryService.createCategory(values);
+        await createCategory(values);
       }
       resetForm({ values: { name: "", description: "" } });
       toast.success("Submit sucessfully");
@@ -40,7 +41,7 @@ const CategoryForm = () => {
     if (isEditMode) {
       const fetchCategory = async () => {
         try {
-          const { data } = await CategoryService.getCategoryById(id);
+          const data = await getCategoryById(id);
           setInitialValues(data);
           console.log(data);
         } catch (error) {
@@ -56,7 +57,7 @@ const CategoryForm = () => {
         title="Category"
         subtitle={isEditMode ? "Update Category" : "Create New Category"}
       />
-      <Box>
+      <Paper sx={{ padding: "2rem", borderRadius: "8px" }}>
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={initialValues}
@@ -113,7 +114,7 @@ const CategoryForm = () => {
             </form>
           )}
         </Formik>
-      </Box>
+      </Paper>
     </Box>
   );
 };
