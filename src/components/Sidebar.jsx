@@ -38,7 +38,7 @@ const navItems = [
     icon: <Inventory2Outlined />,
   },
   {
-    text: "Customers",
+    text: "Users",
     icon: <Groups2Outlined />,
   },
   {
