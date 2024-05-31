@@ -64,7 +64,6 @@ const ProductCard = ({
         <Button
           variant="contained"
           color="secondary"
-          style={{ marginRight: 8 }}
           onClick={() => handleEdit(product.id)}
         >
           Edit

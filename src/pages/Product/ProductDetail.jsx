@@ -21,7 +21,11 @@ const ProductDetail = () => {
   }, [id]);
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Product" subtitle="Product Detail" />
+      <Header
+        title="Product"
+        subtitle="Product Detail"
+        route="/products/create"
+      />
       <Paper sx={{ padding: "2rem", borderRadius: "8px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
@@ -48,10 +52,10 @@ const ProductDetail = () => {
               {product.name}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              {product.description}
+              Description: {product.description}
             </Typography>
             <Typography variant="body2" color="textSecondary" gutterBottom>
-              {product.summary}
+              Summary: {product.summary}
             </Typography>
             <Typography variant="h6" gutterBottom>
               Price: ${product.price}
@@ -75,15 +79,14 @@ const ProductDetail = () => {
             </Typography>
             <Button
               variant="contained"
-              color="error"
               onClick={() => navigate("/products")}
               sx={{ mt: 2, mr: 2 }}
             >
-              Delete Product
+              Back to List
             </Button>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               onClick={() => navigate(`/products/edit/${id}`)}
               sx={{ mt: 2 }}
             >

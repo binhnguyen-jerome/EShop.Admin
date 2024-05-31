@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Box, useTheme, useMediaQuery, CircularProgress } from "@mui/material";
 import Swal from "sweetalert2";
 import Header from "../../components/Header";
-import ProductService from "../../services/ProductService";
 import ProductCard from "./components/ProductCard";
 import { useProducts } from "../../hook/product/useProducts";
 const ProductList = () => {
