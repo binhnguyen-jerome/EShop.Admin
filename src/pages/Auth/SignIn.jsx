@@ -85,8 +85,8 @@ const SignIn = () => {
 };
 
 const initialValues = {
-  email: "",
-  password: "",
+  email: "admin@gmail.com",
+  password: "Binhvtx5@",
 };
 
 const checkoutSchema = yup.object().shape({

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
-import axiosInstance from "../hook/axiosConfig";
+import axiosInstance from "../hook/commom/axiosConfig";
 import {
   signInStart,
   signInSucess,
   signInFailure,
   signoutUserStart,
+  signoutUserSucess,
 } from "../state/Slice/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -23,7 +24,11 @@ const AuthService = {
         dispatch(signInStart());
         const response = await axiosInstance.post(url, data);
         if (response.data.token) {
-          Cookies.set("token", response.data.token, { expires: 1 });
+          let date = new Date();
+          date.setTime(date.getTime() + 1 * 60 * 1000);
+          Cookies.set("token", response.data.token, {
+            expires: date,
+          });
         }
         dispatch(signInSucess(response.data));
         navigate("/");
@@ -47,6 +52,7 @@ const AuthService = {
       dispatch(signoutUserStart());
       Cookies.remove("token");
       navigate("/sign-in");
+      dispatch(signoutUserSucess);
     };
     return signout;
   },

@@ -16,6 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 import ProductForm from "./pages/Product/ProductForm";
 import ProductDetail from "./pages/Product/ProductDetail";
 import NotFound from "./components/NotFound";
+import UserList from "./pages/User/UserList";
+import UserForm from "./pages/User/UserForm";
 function App() {
   const mode = useSelector((state) => state.theme.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -27,8 +29,8 @@ function App() {
           <CssBaseline />
           <Routes>
             <Route path="*" element={<NotFound />} />
-            <Route element={<PrivateRoute />}>
-              <Route element={<Layout />}>
+            <Route element={<Layout />}>
+              <Route element={<PrivateRoute />}>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/products" element={<ProductList />} />
@@ -38,6 +40,8 @@ function App() {
                 <Route path="/categories" element={<CategoryList />} />
                 <Route path="/categories/edit/:id" element={<CategoryForm />} />
                 <Route path="/categories/create" element={<CategoryForm />} />
+                <Route path="/users" element={<UserList />} />
+                <Route path="/users/create" element={<UserForm />} />
               </Route>
             </Route>
             <Route path="/sign-in" element={<SignIn />} />
