@@ -3,8 +3,8 @@ import { Box, Button, CircularProgress, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { useCategories } from "../../hook/category/useCategory";
+import confirmDelete from "../../utils/confirmDelete";
 
 //Columns for the grid table
 const columns = [
@@ -32,32 +32,12 @@ const CategoryList = () => {
   };
   const { categories, loading, getCategories, deleteCategory } =
     useCategories();
+
   useEffect(() => {
     getCategories();
   }, [getCategories]);
-  // Alert before delete
   const handleDelete = async (id) => {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You will not be able to recover this category!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
-    });
-
-    if (result.isConfirmed) {
-      try {
-        await deleteCategory(id);
-        Swal.fire("Deleted!", "Your category has been deleted.", "success");
-      } catch (error) {
-        Swal.fire(
-          "Error!",
-          "There was an error deleting this category.",
-          "error"
-        );
-      }
-    }
+    await confirmDelete(id, deleteCategory);
   };
   return (
     <Box m="1.5rem 2.5rem">

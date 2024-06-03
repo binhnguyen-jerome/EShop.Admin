@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Box, TextField, Button, Paper } from "@mui/material";
 import Header from "../../components/Header";
-import CategoryService from "../../services/CategoryService";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCategories } from "../../hook/category/useCategory";

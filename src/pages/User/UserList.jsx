@@ -3,37 +3,16 @@ import { Box, useTheme, Button } from "@mui/material";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
 import { useUsers } from "../../hook/user/useUsers";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import confirmDelete from "../../utils/confirmDelete";
 const UserList = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const { users, loading, getUsers, deleteUser } = useUsers();
   useEffect(() => {
     getUsers();
   }, [getUsers]);
-  const handleEdit = (id) => {
-    navigate(`/users/edit/${id}`);
-  };
   const handleDelete = async (id) => {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You will not be able to recover this user!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
-    });
-
-    if (result.isConfirmed) {
-      try {
-        await deleteUser(id);
-        Swal.fire("Deleted!", "User has been deleted.", "success");
-      } catch (error) {
-        Swal.fire("Error!", "There was an error deleting this user.", "error");
-      }
-    }
-  };
+    confirmDelete(id, deleteUser);
+  }
   const columns = [
     {
       field: "id",
