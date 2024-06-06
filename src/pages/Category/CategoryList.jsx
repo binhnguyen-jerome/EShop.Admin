@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, CircularProgress, useTheme } from "@mui/material";
+import React, { useEffect } from "react";
+import { Box, Button, CircularProgress } from "@mui/material";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import { useCategories } from "../../hook/category/useCategory";
 import confirmDelete from "../../utils/confirmDelete";
-
-//Columns for the grid table
+import BoxStyles from "../../components/BoxStyles";
 const columns = [
   {
     field: "id",
@@ -25,7 +24,6 @@ const columns = [
   },
 ];
 const CategoryList = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const handleEdit = (id) => {
     navigate(`/categories/edit/${id}`);
@@ -49,40 +47,7 @@ const CategoryList = () => {
       <Button variant="contained" color="secondary">
         Delete Selected
       </Button>
-      <Box
-        height="70vh"
-        mt={2}
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
-          },
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: "none",
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${theme.palette.secondary[200]} !important`,
-          },
-          "& .MuiDataGrid-root .MuiCheckbox-root": {
-            color: `${theme.palette.secondary.main} !important`,
-          },
-          "& .MuiDataGrid-root .MuiCheckbox-root.Mui-checked": {
-            color: `${theme.palette.grey[500]} !important`,
-          },
-        }}
-      >
+      <BoxStyles height="70vh" mt={2}>
         {categories && !loading && (
           <DataGrid
             rows={categories}
@@ -123,7 +88,7 @@ const CategoryList = () => {
           />
         )}
         {loading && <CircularProgress color="success" />}
-      </Box>
+      </BoxStyles>
     </Box>
   );
 };

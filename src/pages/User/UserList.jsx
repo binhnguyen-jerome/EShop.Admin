@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
 import { useUsers } from "../../hook/user/useUsers";
 import confirmDelete from "../../utils/confirmDelete";
+import BoxStyles from "../../components/BoxStyles";
 const UserList = () => {
   const theme = useTheme();
   const { users, loading, getUsers, deleteUser } = useUsers();
@@ -12,7 +13,7 @@ const UserList = () => {
   }, [getUsers]);
   const handleDelete = async (id) => {
     confirmDelete(id, deleteUser);
-  }
+  };
   const columns = [
     {
       field: "id",
@@ -61,34 +62,7 @@ const UserList = () => {
         subtitle="List of UserList"
         route="/users/create"
       />
-      <Box
-        mt="40px"
-        height="75vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
-          },
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: "none",
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${theme.palette.secondary[200]} !important`,
-          },
-        }}
-      >
+      <BoxStyles mt="40px" height="75vh">
         <DataGrid
           loading={loading || !users}
           getRowId={(row) => row.id}
@@ -113,7 +87,7 @@ const UserList = () => {
             },
           ]}
         />
-      </Box>
+      </BoxStyles>
     </Box>
   );
 };
